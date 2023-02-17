@@ -40,7 +40,7 @@ const handleSubmit = async (e) => {
 
 
   
-  await Axios.post("https://cors-anywhere.herokuapp.com/http://restapi.adequateshop.com/api/authaccount/login",
+  Axios.post("https://cors-anywhere.herokuapp.com/http://restapi.adequateshop.com/api/authaccount/login",
       {
           email: email,
           password: password,

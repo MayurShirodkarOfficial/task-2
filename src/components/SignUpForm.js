@@ -46,7 +46,7 @@ export default function SignUpForm() {
 
 
 
-        Axios.post("https://cors-anywhere.herokuapp.com/http://restapi.adequateshop.com/api/authaccount/registration",
+        await Axios.post("https://cors-anywhere.herokuapp.com/http://restapi.adequateshop.com/api/authaccount/registration",
             {
                 name: name,
                 email: email,
@@ -59,7 +59,11 @@ export default function SignUpForm() {
                         navigate("/signin")
                     }, 4000);
                 }
-            })
+            }).catch(error => {
+                alert("Invalid Credentials");
+                navigate('/signin');
+      
+            });
 
         return;
     }

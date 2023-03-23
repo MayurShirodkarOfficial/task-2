@@ -1,4 +1,4 @@
-import React,{useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import { LockClosedIcon } from '@heroicons/react/20/solid'
 import { useNavigate } from 'react-router-dom'
 import Axios from 'axios';
@@ -10,65 +10,67 @@ const SigninForm = () => {
   const handleChange = (e) => {
 
     if (e.target.name === 'email') {
-        setEmail(e.target.value)
+      setEmail(e.target.value)
     }
     else if (e.target.name === 'password') {
-        setPassword(e.target.value)
+      setPassword(e.target.value)
     }
-}
+  }
 
 
 
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  const data = { email, password };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const data = { email, password };
 
-  var res = data.email.match(/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/);
-  if (res === null) {
+    var res = data.email.match(/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/);
+    if (res === null) {
       alert("Enter correct mail");
       return;
-  }
-  const config = {
-    headers: {
-      'Origin': "http://localhost:3000",
-      'Content-Type': 'application/json'
     }
-  };
-  
-  
+    const config = {
+      headers: {
+        'Origin': "http://localhost:3000",
+        'Content-Type': 'application/json'
+      }
+    };
 
 
-  
-  await Axios.post("https://cors-anywhere.herokuapp.com/http://restapi.adequateshop.com/api/authaccount/login",
+
+
+
+    await Axios.post("https://api.infiniteautomation.net:8000/api/auth",
       {
-          email: email,
-          password: password,
+        user: email,
+        pass: password,
 
 
-      },config).then((response) => {
-          console.log(response);
-          if (response.status == 200) {
-              const token =response.data.data.Token;
-              console.log(token);
-              localStorage.setItem('token', token);
-              setTimeout(() => {
-                navigate('/dashboard');
-              }, 1000);
+      }, config).then(async (response) => {
+        console.log(response);
+        if (response.status == 200) {
+          const token = response.data.data.Token;
+          console.log(token);
 
-          }
-          else{
-            alert("Invalid Credentials");
-            navigate('/signin');
-          }
+          await localStorage.setItem('token', token);
 
-      }).catch(error => {
+          setTimeout(() => {
+            navigate('/dashboard');
+          }, 1000);
+
+        }
+        else {
           alert("Invalid Credentials");
           navigate('/signin');
+        }
+
+      }).catch(error => {
+        alert("Invalid Credentials");
+        navigate('/signin');
 
       });
-  return;
-}
+    return;
+  }
 
 
   return (
@@ -115,15 +117,6 @@ const handleSubmit = async (e) => {
             type="checkbox"
             className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
           />
-          <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
-            Remember me
-          </label>
-        </div>
-
-        <div className="text-sm">
-          <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
-            Forgot your password?
-          </a>
         </div>
       </div>
 

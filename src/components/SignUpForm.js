@@ -59,11 +59,7 @@ export default function SignUpForm() {
                         navigate("/signin")
                     }, 4000);
                 }
-            }).catch(error => {
-                alert("Invalid Credentials");
-                navigate('/signin');
-      
-            });
+            })
 
         return;
     }
